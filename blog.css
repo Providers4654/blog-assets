@@ -199,35 +199,37 @@
 
   .blog-author-left {
     display: flex;
-    flex-direction: column;       /* stack vertically */
-    justify-content: center;      /* center vertically with the image */
-    align-items: flex-start;      /* keep text aligned left */
-    gap: 2px;                     /* tiny space between “WRITTEN BY” and name */
-    height: 28px;                 /* match avatar height */
+    align-items: center;    /* keep avatar + text aligned */
+    gap: 0.5rem;            /* small space between avatar and text */
   }
 
   .blog-author-left img {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  /* text block next to avatar */
+  .blog-author-left div {
+    display: flex;
+    flex-direction: column; /* stack WRITTEN BY + name vertically */
+    justify-content: center; /* vertically centered relative to avatar */
+    line-height: 1.1;
   }
 
   .blog-author-left span {
     font-size: 0.65rem;
-    line-height: 1;
   }
 
   .blog-author-left strong {
     font-size: 0.8rem;
-    line-height: 1.1;
   }
 
   .blog-author-right {
     font-size: 0.7rem;
-    text-align: right; 
+    text-align: right;
   }
 }
-
-
 
 
 
