@@ -204,8 +204,8 @@
   }
 
   .blog-author-left img {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
   }
 
@@ -213,9 +213,9 @@
   .blog-author-left div {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* stretch top + bottom */
-    height: 32px;                   /* same as avatar */
-    line-height: 1;
+    justify-content: space-between; /* top + bottom align */
+    height: 36px;                   /* match avatar */
+    line-height: 1.1;
   }
 
   .blog-author-left span {
