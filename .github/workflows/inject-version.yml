@@ -5,17 +5,23 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write   # ✅ allow the workflow to push commits
+
 jobs:
   bump-version:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
 
       - name: Set up git
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Read current version
         id: read_version
@@ -25,19 +31,18 @@ jobs:
           else
             version=0
           fi
-          echo "Current version: $version"
           echo "version=$version" >> $GITHUB_ENV
+          echo "Current version: $version"
 
       - name: Increment version
-        id: increment_version
         run: |
           new_version=$(( ${{ env.version }} + 1 ))
           echo $new_version > version.txt
-          echo "New version: $new_version"
           echo "new_version=$new_version" >> $GITHUB_ENV
+          echo "New version: $new_version"
 
       - name: Commit and push version.txt
         run: |
           git add version.txt
-          git commit -m "Bump version to ${{ env.new_version }}"
-          git push
+          git commit -m "Bump version to ${{ env.new_version }}" || echo "No changes to commit"
+          git push origin HEAD:main
