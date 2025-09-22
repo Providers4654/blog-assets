@@ -2,7 +2,7 @@
 
 // Manual override (set to "" for normal daily refresh)
 // Change this number (e.g. "1", "2", "3") to force an immediate update across all pages
-const manualBump = "2";
+const manualBump = "3";
 
 // Daily cache-buster (YYYYMMDD)
 const today = new Date();
