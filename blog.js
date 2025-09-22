@@ -165,7 +165,12 @@ disclaimer.textContent = getComputedStyle(document.documentElement)
   .trim();
 }
 
-document.addEventListener("DOMContentLoaded", loadSingleBlogPost);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", loadSingleBlogPost);
+} else {
+  loadSingleBlogPost();
+}
+
 
 
 
