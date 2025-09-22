@@ -1,4 +1,4 @@
-name: Inject commit hash into version.txt
+name: Inject version number into version.txt
 
 on:
   push:
@@ -6,25 +6,38 @@ on:
       - main
 
 jobs:
-  inject-version:
+  bump-version:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Get short commit hash
-        id: vars
-        run: echo "hash=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-
-      - name: Write version.txt
-        run: echo "$hash" > version.txt
-        env:
-          hash: ${{ env.hash }}
-
-      - name: Commit version.txt
+      - name: Set up git
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Read current version
+        id: read_version
+        run: |
+          if [ -f version.txt ]; then
+            version=$(cat version.txt)
+          else
+            version=0
+          fi
+          echo "Current version: $version"
+          echo "version=$version" >> $GITHUB_ENV
+
+      - name: Increment version
+        id: increment_version
+        run: |
+          new_version=$(( ${{ env.version }} + 1 ))
+          echo $new_version > version.txt
+          echo "New version: $new_version"
+          echo "new_version=$new_version" >> $GITHUB_ENV
+
+      - name: Commit and push version.txt
+        run: |
           git add version.txt
-          git commit -m "Update version to $(cat version.txt)" || echo "No changes to commit"
+          git commit -m "Bump version to ${{ env.new_version }}"
           git push
