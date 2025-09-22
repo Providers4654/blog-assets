@@ -199,8 +199,8 @@
 
   .blog-author-left {
     display: flex;
-    align-items: center;    /* keep avatar + text aligned */
-    gap: 0.5rem;            /* small space between avatar and text */
+    align-items: center;    
+    gap: 0.5rem;
   }
 
   .blog-author-left img {
@@ -209,12 +209,13 @@
     border-radius: 50%;
   }
 
-  /* text block next to avatar */
+  /* Text block matches avatar height */
   .blog-author-left div {
     display: flex;
-    flex-direction: column; /* stack WRITTEN BY + name vertically */
-    justify-content: center; /* vertically centered relative to avatar */
-    line-height: 1.1;
+    flex-direction: column;
+    justify-content: space-between; /* stretch top + bottom */
+    height: 32px;                   /* same as avatar */
+    line-height: 1;
   }
 
   .blog-author-left span {
@@ -230,6 +231,7 @@
     text-align: right;
   }
 }
+
 
 
 
