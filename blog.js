@@ -58,15 +58,12 @@ const postsArray = posts.slice(1).map(cells => {
 });
 
 
-  const post = postsArray.find(p => (p.link || "").replace(/\/$/, "") === currentPath);
+const post = postsArray.find(p => (p.link || "").replace(/\/$/, "") === currentPath);
 if (!post) {
   console.warn("⚠️ No matching post found for:", currentPath);
-
-  // Still reveal the page so the loader doesn't hang
-  document.getElementById("loading-screen").style.display = "none";
-  document.querySelector(".blog-container").style.display = "block";
   return;
 }
+
 
 
   // Inject content
@@ -166,10 +163,6 @@ const disclaimer = document.getElementById("globalDisclaimer");
 disclaimer.textContent = getComputedStyle(document.documentElement)
   .getPropertyValue('--disclaimer-text')
   .trim();
-
-// === Hide loader and show blog ===
-document.getElementById("loading-screen").style.display = "none";
-document.querySelector(".blog-container").style.display = "block";
 }
 
 document.addEventListener("DOMContentLoaded", loadSingleBlogPost);
