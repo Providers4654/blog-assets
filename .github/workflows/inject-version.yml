@@ -9,14 +9,17 @@ jobs:
   inject-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
       - name: Get short commit hash
-        id: get_hash
-        run: echo "hash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        id: vars
+        run: echo "hash=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
-      - name: Write version
-        run: echo "${{ steps.get_hash.outputs.hash }}" > version.txt
+      - name: Write version.txt
+        run: echo "$hash" > version.txt
+        env:
+          hash: ${{ env.hash }}
 
       - name: Commit version.txt
         run: |
