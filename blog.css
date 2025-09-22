@@ -23,10 +23,17 @@
   HERO IMAGE
 ******************************************************/
 .blog-hero img {
-  width: 100%;               /* Full width */
-  height: auto;              /* Keep aspect ratio */
-  border-radius: 10px;       /* Rounded edges */
+  width: 100%;               
+  height: auto;              
+  border-radius: 10px;       
   margin-bottom: 2rem;
+}
+
+/* === Mobile tweaks === */
+@media (max-width: 600px) {
+  .blog-hero img {
+    margin-bottom: 1rem;   /* reduce gap below hero on mobile */
+  }
 }
 
 /******************************************************
@@ -48,6 +55,14 @@
   font-weight: 500;          /* Slightly lighter than category */
   text-transform: none;      /* Keep capitalization natural */
 }
+
+/* === Mobile tweaks === */
+@media (max-width: 600px) {
+  .blog-category {
+    margin-bottom: 0.4rem;   /* tighter gap before the title */
+  }
+}
+
 
 /******************************************************
   BLOG TITLE AREA
