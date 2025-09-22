@@ -59,10 +59,15 @@ const postsArray = posts.slice(1).map(cells => {
 
 
   const post = postsArray.find(p => (p.link || "").replace(/\/$/, "") === currentPath);
-  if (!post) {
-    console.warn("⚠️ No matching post found for:", currentPath);
-    return;
-  }
+if (!post) {
+  console.warn("⚠️ No matching post found for:", currentPath);
+
+  // Still reveal the page so the loader doesn't hang
+  document.getElementById("loading-screen").style.display = "none";
+  document.querySelector(".blog-container").style.display = "block";
+  return;
+}
+
 
   // Inject content
   document.querySelector(".blog-hero img").src = post.heroImage;
