@@ -6,10 +6,12 @@ on:
       - main
 
 permissions:
-  contents: write   # ✅ allow the workflow to push commits
+  contents: write   # allow workflow to push commits
 
 jobs:
   bump-version:
+    # ✅ don’t run if the commit was made by the bot itself
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -24,7 +26,6 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Read current version
-        id: read_version
         run: |
           if [ -f version.txt ]; then
             version=$(cat version.txt)
