@@ -1,32 +1,3 @@
-/******************************************************
-  LOADING SCREEN
-******************************************************/
-#loading-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;               /* clean white background */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;                  /* sits on top of everything */
-}
-
-#loading-screen img {
-  width: 120px;                   /* adjust size if needed */
-  height: auto;
-  animation: pulse 1.5s infinite; /* subtle animation */
-}
-
-@keyframes pulse {
-  0%   { opacity: 0.4; }
-  50%  { opacity: 1; }
-  100% { opacity: 0.4; }
-}
-
-
 
 
 /******************************************************
