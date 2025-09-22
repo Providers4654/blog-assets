@@ -25,6 +25,3 @@ jobs:
           git add version.txt
           git commit -m "Update version to ${{ env.hash }}" || echo "No changes to commit"
           git push
-
-
-Add workflow to update version.txt automatically
