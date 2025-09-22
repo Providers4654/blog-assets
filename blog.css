@@ -27,34 +27,40 @@
 .blog-hero {
   margin: 0;
   padding: 0;
-  line-height: 0; /* prevents stray whitespace under image */
+  line-height: 0; /* kills inline whitespace */
 }
 
 .blog-hero img {
   width: 100%;
-  height: auto;
+  max-height: 450px;   /* limit image height on desktop */
+  object-fit: cover;   /* crop to fit instead of stretching */
   border-radius: 10px;
-  display: block;  /* removes inline gap below images */
-  margin: 0;       /* no outside space */
+  display: block;
+  margin: 0;
+}
+
+/* === Mobile tweaks === */
+@media (max-width: 600px) {
+  .blog-hero img {
+    max-height: 300px; /* smaller hero image on phones */
+  }
 }
 
 /******************************************************
-  BLOG CATEGORY + SERIES LABEL
-  Format: CATEGORY | SERIES (e.g., Nutrition | The Explainer)
+  BLOG CATEGORY
 ******************************************************/
 .blog-category {
-  display: inline-block;
+  margin: 0;           /* no top/bottom gap */
+  padding: 0.5rem 0 0; /* tiny controlled space above title */
   font-size: 0.9rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #006644;  /* MTN HLTH green */
-  margin: 0;       /* no space above or below */
-  padding-top: 0;
+  color: #006644;      /* MTN HLTH green */
 }
 
 .blog-category span {
-  color: #222;     /* Darker text for the series part */
+  color: #222;
   font-weight: 500;
   text-transform: none;
 }
