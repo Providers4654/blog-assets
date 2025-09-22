@@ -6,10 +6,17 @@
 
 /* === GLOBAL WRAPPER === */
 .blog-container {
-  max-width: 850px;          /* Wider for better readability */
-  margin: 0 auto;            /* Centers blog content */
-  padding: 2rem;             /* Breathing room */
-  background: #ffffff;       /* Clean white background */
+  max-width: 850px;          
+  margin: 0 auto;            
+  padding: 2rem;             
+  background: #ffffff;       
+}
+
+/* === Mobile tweaks === */
+@media (max-width: 600px) {
+  .blog-container {
+    padding: 1rem;           /* less side padding on mobile */
+  }
 }
 
 /******************************************************
@@ -46,17 +53,31 @@
   BLOG TITLE AREA
 ******************************************************/
 .blog-title {
-  font-size: 2.75rem;        /* Very large headline */
-  font-weight: 700;          /* Bold weight */
+  font-size: 2.75rem;        
+  font-weight: 700;          
   margin-bottom: 1rem;
-  line-height: 1.2;          /* Tight spacing */
+  line-height: 1.2;          
   color: #111; 
 }
 
 .blog-subtitle {
-  font-size: 1.25rem;        /* Supporting explainer */
-  color: #555;               /* Medium gray */
+  font-size: 1.25rem;        
+  color: #555;               
   margin-bottom: 2rem;
+}
+
+/* === Mobile tweaks === */
+@media (max-width: 600px) {
+  .blog-title {
+    font-size: 2rem;         /* shrink headline */
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-subtitle {
+    font-size: 1rem;         /* smaller subtitle */
+    margin-bottom: 1.25rem;
+  }
 }
 
 /******************************************************
@@ -66,7 +87,7 @@
   display: flex;             
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;           /* ✅ allow wrapping on small screens */
+  flex-wrap: wrap;           
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
   padding: 1rem 0;
@@ -99,21 +120,35 @@
   text-align: right;
   font-size: 0.85rem;
   color: #999;
-  margin-top: 0;             /* reset */
-  width: auto;               /* prevent forced alignment */
+  margin-top: 0;             
+  width: auto;               
 }
 
-/* === Mobile stacking === */
+/* === Mobile tweaks === */
 @media (max-width: 600px) {
   .blog-author-box {
-    flex-direction: column;      /* stack everything */
+    flex-direction: column;  
     align-items: flex-start;
+    padding: 0.75rem 0;       /* tighter spacing */
+    margin-bottom: 1.5rem;
+    font-size: 0.8rem;        /* smaller text */
+  }
+
+  .blog-author-left img {
+    width: 40px;
+    height: 40px;             /* smaller avatar */
+  }
+
+  .blog-author-left strong {
+    font-size: 0.9rem;        
   }
 
   .blog-author-right {
-    text-align: left;            /* match left-aligned style */
-    margin-top: 0.5rem;          /* space below author info */
+    text-align: left;         
+    margin-top: 0.25rem;
+    font-size: 0.75rem;       /* smaller meta text */
   }
+}
 
 
 
@@ -121,7 +156,7 @@
   ARTICLE HIGHLIGHTS
 ******************************************************/
 .blog-highlights {
-  background: #f9f9f9;       /* Light gray background */
+  background: #f9f9f9;       
   padding: 1.5rem;
   border-radius: 8px;
   margin-bottom: 2.5rem;
@@ -142,7 +177,28 @@
 
 .blog-highlights li {
   margin-bottom: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.6;
 }
+
+/* === Mobile tweaks === */
+@media (max-width: 600px) {
+  .blog-highlights {
+    padding: 1rem;           /* tighter padding */
+    margin-bottom: 1.75rem;  /* less vertical space */
+  }
+
+  .blog-highlights h3 {
+    font-size: 1rem;         /* slightly smaller heading */
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-highlights li {
+    font-size: 0.9rem;       /* smaller bullet text */
+    margin-bottom: 0.5rem;
+  }
+}
+
 
 /******************************************************
   MAIN CONTENT
@@ -168,6 +224,7 @@
 
 .blog-content p {
   margin: 1rem 0;
+  font-size: 1.05rem;
 }
 
 .blog-content a {
@@ -178,6 +235,32 @@
 .blog-content a:hover {
   color: #004b88;
 }
+
+/* === Mobile tweaks === */
+@media (max-width: 600px) {
+  .blog-content {
+    font-size: 0.95rem;       /* smaller base font */
+    line-height: 1.6;         /* slightly tighter line spacing */
+  }
+
+  .blog-content h2 {
+    font-size: 1.4rem;        /* smaller section headers */
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-content h3 {
+    font-size: 1.1rem;        /* smaller subheaders */
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-content p {
+    font-size: 0.95rem;       /* match base font size */
+    margin: 0.75rem 0;        /* tighter vertical rhythm */
+  }
+}
+
 
 /******************************************************
   INLINE IMAGES
@@ -214,6 +297,7 @@
 
 .blog-cta h3 {
   margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 .blog-cta a {
@@ -224,11 +308,31 @@
   border-radius: 6px;
   text-decoration: none;
   font-weight: bold;
+  font-size: 1rem;
 }
 
 .blog-cta a:hover {
   background: #444;          /* Slightly lighter hover */
 }
+
+/* === Mobile tweaks === */
+@media (max-width: 600px) {
+  .blog-cta {
+    margin-top: 2rem;        /* reduce spacing above */
+    padding: 1.25rem;        /* lighter padding */
+  }
+
+  .blog-cta h3 {
+    font-size: 1.25rem;      /* smaller heading */
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-cta a {
+    font-size: 0.9rem;       /* smaller button text */
+    padding: 0.6rem 1.25rem; /* tighter button padding */
+  }
+}
+
 
 /******************************************************
   GLOBAL BLOG VARIABLES
@@ -240,7 +344,7 @@
 
   /* Disclaimer */
   --disclaimer-heading: "Disclaimer";
-  --disclaimer-text: This blog is for educational purposes only and does not replace medical advice.;
+  --disclaimer-text: "This blog is for educational purposes only and does not replace medical advice.";
 }
 
 
@@ -301,6 +405,26 @@
   color: #666;
 }
 
+/* === Mobile tweaks === */
+@media (max-width: 600px) {
+  .related-list {
+    grid-template-columns: 1fr;  /* stack into single column */
+    gap: 1rem;                   /* slightly smaller gap */
+  }
+
+  .related-item img {
+    height: 180px;               /* taller images for single column */
+  }
+
+  .related-item h4 {
+    font-size: 0.95rem;          /* slightly smaller title */
+  }
+
+  .related-item span {
+    font-size: 0.8rem;
+  }
+}
+
 
 
 
@@ -327,3 +451,15 @@
   color: #ddd;
   margin-right: 0.25rem;
 }
+
+/* === Mobile tweaks === */
+@media (max-width: 600px) {
+  .blog-disclaimer {
+    margin-top: 2.5rem;     /* less vertical gap */
+    padding: 1.25rem;       /* tighter padding */
+    font-size: 0.85rem;     /* smaller text */
+    line-height: 1.5;
+    border-radius: 8px;     /* softer rounding */
+  }
+}
+
