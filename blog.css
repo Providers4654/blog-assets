@@ -1,0 +1,310 @@
+/******************************************************
+  BLOG PAGE GLOBAL STYLESHEET
+  Purpose: Controls layout, typography, and visuals
+  across ALL blog posts.
+******************************************************/
+
+/* === GLOBAL WRAPPER === */
+.blog-container {
+  max-width: 850px;          /* Wider for better readability */
+  margin: 0 auto;            /* Centers blog content */
+  padding: 2rem;             /* Breathing room */
+  background: #ffffff;       /* Clean white background */
+}
+
+/******************************************************
+  HERO IMAGE
+******************************************************/
+.blog-hero img {
+  width: 100%;               /* Full width */
+  height: auto;              /* Keep aspect ratio */
+  border-radius: 10px;       /* Rounded edges */
+  margin-bottom: 2rem;
+}
+
+/******************************************************
+  BLOG CATEGORY + SERIES LABEL
+  Format: CATEGORY | SERIES (e.g., Nutrition | The Explainer)
+******************************************************/
+.blog-category {
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #006644;            /* MTN HLTH green */
+  margin-bottom: 0.75rem;
+}
+
+.blog-category span {
+  color: #222;               /* Darker text for the series part */
+  font-weight: 500;          /* Slightly lighter than category */
+  text-transform: none;      /* Keep capitalization natural */
+}
+
+/******************************************************
+  BLOG TITLE AREA
+******************************************************/
+.blog-title {
+  font-size: 2.75rem;        /* Very large headline */
+  font-weight: 700;          /* Bold weight */
+  margin-bottom: 1rem;
+  line-height: 1.2;          /* Tight spacing */
+  color: #111; 
+}
+
+.blog-subtitle {
+  font-size: 1.25rem;        /* Supporting explainer */
+  color: #555;               /* Medium gray */
+  margin-bottom: 2rem;
+}
+
+/******************************************************
+  AUTHOR BOX
+******************************************************/
+.blog-author-box {
+  display: flex;             /* Aligns left and right sections */
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+  margin-bottom: 2.5rem;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.blog-author-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;              /* Space between image & text */
+}
+
+.blog-author-left img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;        /* Circle image */
+}
+
+.blog-author-left strong {
+  display: block;
+  font-size: 1rem;
+  color: #222;
+}
+
+.blog-author-right {
+  text-align: right;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+/******************************************************
+  ARTICLE HIGHLIGHTS
+******************************************************/
+.blog-highlights {
+  background: #f9f9f9;       /* Light gray background */
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2.5rem;
+}
+
+.blog-highlights h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.blog-highlights ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.blog-highlights li {
+  margin-bottom: 0.75rem;
+}
+
+/******************************************************
+  MAIN CONTENT
+******************************************************/
+.blog-content {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.7;
+  color: #222;
+}
+
+.blog-content h2 {
+  font-size: 1.75rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.blog-content h3 {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.blog-content p {
+  margin: 1rem 0;
+}
+
+.blog-content a {
+  color: #0077cc;
+  text-decoration: underline;
+}
+
+.blog-content a:hover {
+  color: #004b88;
+}
+
+/******************************************************
+  INLINE IMAGES
+******************************************************/
+.blog-content img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  display: block;
+}
+
+/******************************************************
+  BLOCKQUOTES
+******************************************************/
+.blog-content blockquote {
+  border-left: 4px solid #0077cc;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #444;
+  background: #f9f9f9;
+}
+
+/******************************************************
+  CALL TO ACTION (END OF BLOG)
+******************************************************/
+.blog-cta {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: #f0f4f8;       /* Soft gray-blue */
+  border-radius: 8px;
+  text-align: center;
+}
+
+.blog-cta h3 {
+  margin-bottom: 1rem;
+}
+
+.blog-cta a {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: #222;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.blog-cta a:hover {
+  background: #444;          /* Slightly lighter hover */
+}
+
+/******************************************************
+  GLOBAL BLOG VARIABLES
+******************************************************/
+:root {
+  /* Default CTA link */
+  --cta-link-text: "Book a Consultation"; /* used if sheet cell empty */
+  --cta-link-url: "/free-consultation";
+
+  /* Disclaimer */
+  --disclaimer-heading: "Disclaimer";
+  --disclaimer-text: This blog is for educational purposes only and does not replace medical advice.;
+}
+
+
+/******************************************************
+  BLOG RELATED POSTS
+******************************************************/
+.blog-related {
+  margin-top: 3rem;
+}
+
+.blog-related h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #111;
+}
+
+.related-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.related-item {
+  display: block;
+  background: #f9f9f9;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #222;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.related-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.related-item img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.related-item-content {
+  padding: 0.75rem 1rem;
+}
+
+.related-item h4 {
+  font-size: 1rem;
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+}
+
+.related-item span {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+
+
+
+/******************************************************
+  BLOG DISCLAIMER
+******************************************************/
+.blog-disclaimer {
+  margin-top: 4rem;
+  padding: 2rem;
+  background: #111;
+  color: #f5f5f5;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.blog-disclaimer::before {
+  content: var(--disclaimer-heading) " — ";
+  display: inline;
+  font-style: italic;
+  font-weight: 500;
+  color: #ddd;
+  margin-right: 0.25rem;
+}
