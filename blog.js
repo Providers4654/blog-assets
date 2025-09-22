@@ -66,16 +66,21 @@ if (!post) {
 
 
 
-// Inject content
+// Inject hero image
 const heroImg = document.querySelector(".blog-hero img");
 heroImg.src = post.heroImage;
 
-// Detect orientation
+// Set blurred background via CSS variable
+const heroContainer = document.querySelector(".blog-hero");
+heroContainer.style.setProperty("--hero-url", `url(${post.heroImage})`);
+
+// Detect orientation (still useful for CSS tweaks if needed)
 heroImg.onload = () => {
   if (heroImg.naturalWidth > heroImg.naturalHeight) {
     heroImg.classList.add("landscape");
   }
 };
+
 
 document.querySelector(".blog-title").textContent = post.title;
 document.querySelector(".blog-subtitle").textContent = post.subtitle;
