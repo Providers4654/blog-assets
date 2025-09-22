@@ -28,23 +28,22 @@
   margin: 0;
   padding: 0;
   line-height: 0;
-  max-height: 450px;        /* cap the container */
-  overflow: hidden;         /* crop overflow */
+  text-align: center;      /* keep centered if narrower */
 }
 
 .blog-hero img {
   width: 100%;
-  height: 100%;             /* force it to fill the capped container */
-  object-fit: cover;        /* crop instead of squish */
+  height: auto;            /* keep aspect ratio */
+  max-height: 500px;       /* cap size on desktop */
+  object-fit: contain;     /* always show full image */
   border-radius: 10px;
-  display: block;
-  margin: 0;
+  display: inline-block;
 }
 
 /* === Mobile tweaks === */
 @media (max-width: 600px) {
-  .blog-hero {
-    max-height: 300px;      /* smaller hero on phones */
+  .blog-hero img {
+    max-height: 300px;     /* smaller hero on phones */
   }
 }
 
@@ -114,8 +113,8 @@
 .blog-author-box {
   display: flex;
   align-items: center;
-  justify-content: center;   /* center whole group */
-  gap: 2rem;                 /* space between author and date */
+  justify-content: space-between; /* push left and right */
+  gap: 2rem;
   flex-wrap: wrap;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
