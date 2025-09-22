@@ -28,22 +28,30 @@
   margin: 0;
   padding: 0;
   line-height: 0;
-  text-align: center;      /* keep centered if narrower */
+  text-align: center; /* keep centered if narrower */
 }
 
 .blog-hero img {
-  width: 100%;
-  height: auto;            /* keep aspect ratio */
-  max-height: 500px;       /* cap size on desktop */
-  object-fit: contain;     /* always show full image */
+  width: auto;             /* default for portrait */
+  max-width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: contain;
   border-radius: 10px;
   display: inline-block;
+}
+
+/* Landscape images get full width */
+.blog-hero img.landscape {
+  width: 100%;
+  height: auto;
+  max-height: none;
 }
 
 /* === Mobile tweaks === */
 @media (max-width: 600px) {
   .blog-hero img {
-    max-height: 300px;     /* smaller hero on phones */
+    max-height: 300px;
   }
 }
 
