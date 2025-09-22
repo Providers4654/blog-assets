@@ -155,10 +155,17 @@ if (relatedPosts.length) {
 
 
 
-
+  
   // Disclaimer (from CSS)
   const disclaimer = document.getElementById("globalDisclaimer");
   disclaimer.textContent = getComputedStyle(document.documentElement).getPropertyValue('--disclaimer-text').trim();
+
+  // === Hide loader and show blog ===
+  document.getElementById("loading-screen").style.display = "none";
+  document.querySelector(".blog-container").style.display = "block";
 }
 
-document.addEventListener("DOMContentLoaded", loadSingleBlogPost);
+window.addEventListener("load", loadSingleBlogPost);
+
+
+
