@@ -26,13 +26,13 @@
   width: 100%;               
   height: auto;              
   border-radius: 10px;       
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;          /* no space below hero */
 }
 
 /* === Mobile tweaks === */
 @media (max-width: 600px) {
   .blog-hero img {
-    margin-bottom: 0.5rem;   /* reduce gap below hero on mobile */
+    margin-bottom: 0;        /* no space on mobile either */
   }
 }
 
@@ -47,7 +47,8 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   color: #006644;            /* MTN HLTH green */
-  margin-bottom: 0.75rem;
+  margin-top: 0;             /* no top gap */
+  margin-bottom: 0.5rem;     /* tighter space before title */
 }
 
 .blog-category span {
@@ -59,9 +60,10 @@
 /* === Mobile tweaks === */
 @media (max-width: 600px) {
   .blog-category {
-    margin-bottom: 0.4rem;   /* tighter gap before the title */
+    margin-bottom: 0.3rem;   /* ultra-tight gap before title on mobile */
   }
 }
+
 
 
 /******************************************************
