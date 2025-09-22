@@ -66,11 +66,21 @@ if (!post) {
 
 
 
-  // Inject content
-  document.querySelector(".blog-hero img").src = post.heroImage;
-  document.querySelector(".blog-title").textContent = post.title;
-  document.querySelector(".blog-subtitle").textContent = post.subtitle;
-  document.querySelector(".blog-category").textContent = post.category;
+// Inject content
+const heroImg = document.querySelector(".blog-hero img");
+heroImg.src = post.heroImage;
+
+// Detect orientation
+heroImg.onload = () => {
+  if (heroImg.naturalWidth > heroImg.naturalHeight) {
+    heroImg.classList.add("landscape");
+  }
+};
+
+document.querySelector(".blog-title").textContent = post.title;
+document.querySelector(".blog-subtitle").textContent = post.subtitle;
+document.querySelector(".blog-category").textContent = post.category;
+
 
 
   // Author
