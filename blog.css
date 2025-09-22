@@ -189,9 +189,9 @@
 /* === Mobile tweaks === */
 @media (max-width: 600px) {
   .blog-author-box {
-    flex-direction: row;           /* keep side by side */
-    justify-content: space-between; /* left vs right */
-    align-items: center;           /* vertically align */
+    flex-direction: row;           
+    justify-content: space-between; 
+    align-items: center;           
     padding: 0.5rem 0;
     margin-bottom: 1.25rem;
     font-size: 0.75rem;
@@ -199,8 +199,11 @@
 
   .blog-author-left {
     display: flex;
-    align-items: center;
-    gap: 0.4rem;
+    flex-direction: column;       /* stack vertically */
+    justify-content: center;      /* center vertically with the image */
+    align-items: flex-start;      /* keep text aligned left */
+    gap: 2px;                     /* tiny space between “WRITTEN BY” and name */
+    height: 28px;                 /* match avatar height */
   }
 
   .blog-author-left img {
@@ -210,17 +213,20 @@
 
   .blog-author-left span {
     font-size: 0.65rem;
+    line-height: 1;
   }
 
   .blog-author-left strong {
     font-size: 0.8rem;
+    line-height: 1.1;
   }
 
   .blog-author-right {
     font-size: 0.7rem;
-    text-align: right; /* keep date/time aligned right */
+    text-align: right; 
   }
 }
+
 
 
 
