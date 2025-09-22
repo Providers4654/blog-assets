@@ -25,35 +25,49 @@
   HERO IMAGE
 ******************************************************/
 .blog-hero {
+  position: relative;
   margin: 0;
   padding: 0;
   line-height: 0;
-  text-align: center; /* keep centered if narrower */
-}
-
-.blog-hero img {
-  width: auto;             /* default for portrait */
-  max-width: 100%;
-  height: auto;
-  max-height: 500px;
-  object-fit: contain;
+  text-align: center;
+  height: 500px;             /* consistent hero height */
   border-radius: 10px;
-  display: inline-block;
+  overflow: hidden;
 }
 
-/* Landscape images get full width */
-.blog-hero img.landscape {
-  width: 100%;
+/* Blurred background fill */
+.blog-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--hero-url);
+  background-size: cover;
+  background-position: center;
+  filter: blur(20px) brightness(0.7);
+  transform: scale(1.1);      /* avoid blur edges showing */
+  z-index: 0;
+}
+
+/* Foreground hero image */
+.blog-hero img {
+  position: relative;
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
   height: auto;
-  max-height: none;
+  margin: auto;
+  display: block;
+  z-index: 1;
+  border-radius: 10px;
 }
 
 /* === Mobile tweaks === */
 @media (max-width: 600px) {
-  .blog-hero img {
-    max-height: 300px;
+  .blog-hero {
+    height: 300px;
   }
 }
+
 
 /******************************************************
   BLOG CATEGORY
