@@ -167,7 +167,7 @@ document.getElementById("loading-screen").style.display = "none";
 document.querySelector(".blog-container").style.display = "block";
 }
 
-window.addEventListener("load", loadSingleBlogPost);
+document.addEventListener("DOMContentLoaded", loadSingleBlogPost);
 
 
 
