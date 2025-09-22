@@ -32,7 +32,7 @@
 /* === Mobile tweaks === */
 @media (max-width: 600px) {
   .blog-hero img {
-    margin-bottom: 1rem;   /* reduce gap below hero on mobile */
+    margin-bottom: 0.5rem;   /* reduce gap below hero on mobile */
   }
 }
 
