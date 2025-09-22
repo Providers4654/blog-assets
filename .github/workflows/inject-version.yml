@@ -12,16 +12,16 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Get short commit hash
-        id: vars
-        run: echo "hash=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        id: get_hash
+        run: echo "hash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Write version
-        run: echo "${{ env.hash }}" > version.txt
+        run: echo "${{ steps.get_hash.outputs.hash }}" > version.txt
 
       - name: Commit version.txt
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add version.txt
-          git commit -m "Update version to ${{ env.hash }}" || echo "No changes to commit"
+          git commit -m "Update version to $(cat version.txt)" || echo "No changes to commit"
           git push
