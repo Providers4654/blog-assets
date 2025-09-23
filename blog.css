@@ -401,14 +401,12 @@
   GLOBAL BLOG VARIABLES
 ******************************************************/
 :root {
-  --cta-link-text: Book a Consultation;
-  --cta-link-url: /free-consultation;
-
-
-  /* Disclaimer */
+  --cta-link-text: "Book a Consultation";
+  --cta-link-url: "/free-consultation";
   --disclaimer-heading: "Disclaimer";
-  --disclaimer-text: Disclaimer - This blog is for educational purposes only and does not replace medical advice.;
+  --disclaimer-text: "This blog is for educational purposes only and does not replace medical advice.";
 }
+
 
 
 /******************************************************
