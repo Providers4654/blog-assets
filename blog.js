@@ -106,8 +106,15 @@ async function loadSingleBlogPost() {
   }
 
 // Date + Read Time
-document.querySelector(".blog-author-date").textContent = `Published: ${post.date}`;
-document.querySelector(".blog-author-readtime").innerHTML = `🕒 ${post.readTime || "5 MINUTE READ"}`;
+const dateEl = document.querySelector(".blog-author-date");
+const readTimeEl = document.querySelector(".blog-author-readtime");
+
+if (dateEl) {
+  dateEl.textContent = `Published: ${post.date}`;
+}
+if (readTimeEl) {
+  readTimeEl.innerHTML = `🕒 ${post.readTime || "5 MINUTE READ"}`;
+}
 
 // === CTA ===
 const ctaHeading = document.getElementById("globalCtaHeading");
