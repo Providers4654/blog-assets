@@ -109,67 +109,71 @@ async function loadSingleBlogPost() {
   document.querySelector(".blog-date").textContent = `PUBLISHED: ${post.date}`;
   document.querySelector(".blog-readtime").innerHTML = `🕒 ${post.readTime || "5 MINUTE READ"}`;
 
-  // === CTA ===
-  const ctaHeading = document.getElementById("globalCtaHeading");
-  const ctaLink = document.getElementById("globalCtaLink");
+// === CTA ===
+const ctaHeading = document.getElementById("globalCtaHeading");
+const ctaLink = document.getElementById("globalCtaLink");
 
-  if (ctaHeading && ctaLink) {
-    const defaultText = getComputedStyle(document.documentElement)
-      .getPropertyValue('--cta-link-text')
-      .trim() || "Book a Consultation";
+if (ctaHeading && ctaLink) {
+  // Defaults from CSS
+  const defaultText = getComputedStyle(document.documentElement)
+    .getPropertyValue('--cta-link-text')
+    .trim() || "Book a Consultation";
 
-    const defaultUrl = getComputedStyle(document.documentElement)
-      .getPropertyValue('--cta-link-url')
-      .trim() || "/free-consultation";
+  const defaultUrl = getComputedStyle(document.documentElement)
+    .getPropertyValue('--cta-link-url')
+    .trim() || "/free-consultation";
 
-    ctaHeading.textContent = post.ctaText || "Ready to Take the Next Step?";
-    ctaLink.textContent = post.ctaButtonText || defaultText;
-    ctaLink.href = defaultUrl;
+  // Fill in from sheet OR defaults
+  ctaHeading.textContent = (post.ctaText && post.ctaText.trim()) || "Ready to Take the Next Step?";
+  ctaLink.textContent = (post.ctaButtonText && post.ctaButtonText.trim()) || defaultText;
+  ctaLink.href = defaultUrl; // always from CSS
+}
+
+
+// === Related Posts ===
+const relatedWrapper = document.getElementById("relatedWrapper");
+const relatedContainer = document.getElementById("relatedPosts");
+
+if (relatedWrapper && relatedContainer) {
+  const currentTags = (post.tags || "").split(",").map(t => t.trim().toLowerCase());
+
+  let relatedPosts = postsArray.filter(p => {
+    if (p.link === post.link) return false; // skip current post
+    const tags = (p.tags || "").split(",").map(t => t.trim().toLowerCase());
+    return tags.some(t => currentTags.includes(t));
+  });
+
+  if (relatedPosts.length < 4) {
+    const categoryMatches = postsArray.filter(p =>
+      p.link !== post.link &&
+      p.category === post.category &&
+      !relatedPosts.includes(p)
+    );
+    relatedPosts = relatedPosts.concat(categoryMatches);
   }
 
-  // === Related Posts ===
-  const relatedWrapper = document.getElementById("relatedWrapper");
-  const relatedContainer = document.getElementById("relatedPosts");
+  relatedPosts = relatedPosts.slice(0, 4);
 
-  if (relatedWrapper && relatedContainer) {
-    const currentTags = (post.tags || "").split(",").map(t => t.trim().toLowerCase());
-
-    let relatedPosts = postsArray.filter(p => {
-      if (p.link === post.link) return false;
-      const tags = (p.tags || "").split(",").map(t => t.trim().toLowerCase());
-      return tags.some(t => currentTags.includes(t));
+  if (relatedPosts.length > 0) {
+    relatedPosts.forEach(rp => {
+      const item = document.createElement("a");
+      item.className = "related-item";
+      item.href = rp.link;
+      item.innerHTML = `
+        <img src="${rp.heroImage}" alt="${rp.title}">
+        <div class="related-item-content">
+          <h4>${rp.title}</h4>
+          <span>${rp.category}</span>
+        </div>
+      `;
+      relatedContainer.appendChild(item);
     });
-
-    if (relatedPosts.length < 4) {
-      const categoryMatches = postsArray.filter(p =>
-        p.link !== post.link &&
-        p.category === post.category &&
-        !relatedPosts.includes(p)
-      );
-      relatedPosts = relatedPosts.concat(categoryMatches);
-    }
-
-    relatedPosts = relatedPosts.slice(0, 4);
-
-    if (relatedPosts.length) {
-      relatedPosts.forEach(rp => {
-        const item = document.createElement("a");
-        item.className = "related-item";
-        item.href = rp.link;
-        item.innerHTML = `
-          <img src="${rp.heroImage}" alt="${rp.title}">
-          <div class="related-item-content">
-            <h4>${rp.title}</h4>
-            <span>${rp.category}</span>
-          </div>
-        `;
-        relatedContainer.appendChild(item);
-      });
-    } else {
-      relatedWrapper.remove();
-    }
+  } else {
+    // Hide the entire section (heading + list)
+    relatedWrapper.style.display = "none";
   }
 }
+
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", loadSingleBlogPost);
