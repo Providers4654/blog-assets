@@ -136,26 +136,6 @@ if (categoryEl && post.category) {
 const relatedWrapper = document.getElementById("relatedWrapper");
 const relatedContainer = document.getElementById("relatedPosts");
 
-// … after filtering posts
-if (relatedPosts.length) {
-  relatedPosts.forEach(rp => {
-    const item = document.createElement("a");
-    item.className = "related-item";
-    item.href = rp.link;
-    item.innerHTML = `
-      <img src="${rp.heroImage}" alt="${rp.title}">
-      <div class="related-item-content">
-        <h4>${rp.title}</h4>
-        <span>${rp.category}</span>
-      </div>
-    `;
-    relatedContainer.appendChild(item);
-  });
-} else if (relatedWrapper) {
-  relatedWrapper.remove();  // nukes heading + list
-}
-
-
 // Normalize current post tags
 const currentTags = (post.tags || "").split(",").map(t => t.trim().toLowerCase());
 
@@ -194,9 +174,10 @@ if (relatedPosts.length) {
     `;
     relatedContainer.appendChild(item);
   });
-} else {
-  relatedWrapper.remove(); // hide entire block if nothing related
+} else if (relatedWrapper) {
+  relatedWrapper.remove(); // nukes heading + list if empty
 }
+
 
 
 
