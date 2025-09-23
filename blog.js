@@ -105,9 +105,9 @@ async function loadSingleBlogPost() {
     authorNameEl.textContent = authorName;
   }
 
-  // Date + Read Time
-  document.querySelector(".blog-date").textContent = `PUBLISHED: ${post.date}`;
-  document.querySelector(".blog-readtime").innerHTML = `🕒 ${post.readTime || "5 MINUTE READ"}`;
+// Date + Read Time
+document.querySelector(".blog-author-date").textContent = `Published: ${post.date}`;
+document.querySelector(".blog-author-readtime").innerHTML = `🕒 ${post.readTime || "5 MINUTE READ"}`;
 
 // === CTA ===
 const ctaHeading = document.getElementById("globalCtaHeading");
