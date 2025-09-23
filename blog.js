@@ -117,16 +117,25 @@ if (categoryEl && post.category) {
   document.querySelector(".blog-date").textContent = `PUBLISHED: ${post.date}`;
   document.querySelector(".blog-readtime").innerHTML = `🕒 ${post.readTime || "5 MINUTE READ"}`;
 
-  // === CTA ===
-  document.getElementById("globalCtaHeading").textContent =
-    post.ctaText || "Ready to Take the Next Step?";
+// === CTA ===
+const ctaHeading = document.getElementById("globalCtaHeading");
+const ctaLink = document.getElementById("globalCtaLink");
 
-  const ctaLink = document.getElementById("globalCtaLink");
-  ctaLink.textContent =
-    post.ctaButtonText ||
-    getComputedStyle(document.documentElement).getPropertyValue('--cta-link-text').trim();
-  ctaLink.href = getComputedStyle(document.documentElement).getPropertyValue('--cta-link-url').trim();
+if (ctaHeading && ctaLink) {
+  // Grab defaults from CSS
+  const defaultText = getComputedStyle(document.documentElement)
+    .getPropertyValue('--cta-link-text')
+    .trim() || "Book a Consultation";
 
+  const defaultUrl = getComputedStyle(document.documentElement)
+    .getPropertyValue('--cta-link-url')
+    .trim() || "/free-consultation";
+
+  // Fill in from sheet OR defaults
+  ctaHeading.textContent = post.ctaText || "Ready to Take the Next Step?";
+  ctaLink.textContent = post.ctaButtonText || defaultText;
+  ctaLink.href = defaultUrl;
+}
 
 
 
