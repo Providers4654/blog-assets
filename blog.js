@@ -1,7 +1,6 @@
 // === CONFIG ===
 const BLOG_INDEX_PATH = "/mtn-hlth-blog";
 
-
 async function loadSingleBlogPost() {
   const postsUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSS00JZEcV_m0xKeyM6VWfWI_r5MEOCivfJMqSW6yj7xxaBmhGRYJVpRRyWHCaH2ONCmSBgMOfFE3U9/pub?gid=0&single=true&output=csv";  
   const authorsUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSS00JZEcV_m0xKeyM6VWfWI_r5MEOCivfJMqSW6yj7xxaBmhGRYJVpRRyWHCaH2ONCmSBgMOfFE3U9/pub?gid=2014004444&single=true&output=csv"; 
@@ -49,54 +48,47 @@ async function loadSingleBlogPost() {
 
   // Match current URL
   const currentPath = window.location.pathname.replace(/\/$/, "");
-const postsArray = posts.slice(1).map(cells => {
-  const [
-    heroImage, title, subtitle, author, date, category,
-    readTime, tags, excerpt, link, ctaText, ctaButtonText
-  ] = cells;
+  const postsArray = posts.slice(1).map(cells => {
+    const [
+      heroImage, title, subtitle, author, date, category,
+      readTime, tags, excerpt, link, ctaText, ctaButtonText
+    ] = cells;
 
-  return {
-    heroImage, title, subtitle, author, date, category,
-    readTime, tags, excerpt, link, ctaText, ctaButtonText
-  };
-});
+    return {
+      heroImage, title, subtitle, author, date, category,
+      readTime, tags, excerpt, link, ctaText, ctaButtonText
+    };
+  });
 
-
-const post = postsArray.find(p => (p.link || "").replace(/\/$/, "") === currentPath);
-if (!post) {
-  console.warn("⚠️ No matching post found for:", currentPath);
-  return;
-}
-
-
-
-// Inject hero image
-const heroImg = document.querySelector(".blog-hero img");
-heroImg.src = post.heroImage;
-
-// Set blurred background via CSS variable
-const heroContainer = document.querySelector(".blog-hero");
-heroContainer.style.setProperty("--hero-url", `url(${post.heroImage})`);
-
-// Detect orientation (still useful for CSS tweaks if needed)
-heroImg.onload = () => {
-  if (heroImg.naturalWidth > heroImg.naturalHeight) {
-    heroImg.classList.add("landscape");
+  const post = postsArray.find(p => (p.link || "").replace(/\/$/, "") === currentPath);
+  if (!post) {
+    console.warn("⚠️ No matching post found for:", currentPath);
+    return;
   }
-};
 
+  // Inject hero image
+  const heroImg = document.querySelector(".blog-hero img");
+  heroImg.src = post.heroImage;
 
-document.querySelector(".blog-title").textContent = post.title;
-document.querySelector(".blog-subtitle").textContent = post.subtitle;
-const categoryEl = document.querySelector(".blog-category");
-if (categoryEl && post.category) {
-  categoryEl.innerHTML = `<a href="${BLOG_INDEX_PATH}?category=${encodeURIComponent(
-    post.category.trim()
-  )}">${post.category}</a>`;
-}
+  // Set blurred background via CSS variable
+  const heroContainer = document.querySelector(".blog-hero");
+  heroContainer.style.setProperty("--hero-url", `url(${post.heroImage})`);
 
+  // Detect orientation
+  heroImg.onload = () => {
+    if (heroImg.naturalWidth > heroImg.naturalHeight) {
+      heroImg.classList.add("landscape");
+    }
+  };
 
-
+  document.querySelector(".blog-title").textContent = post.title;
+  document.querySelector(".blog-subtitle").textContent = post.subtitle;
+  const categoryEl = document.querySelector(".blog-category");
+  if (categoryEl && post.category) {
+    categoryEl.innerHTML = `<a href="${BLOG_INDEX_PATH}?category=${encodeURIComponent(
+      post.category.trim()
+    )}">${post.category}</a>`;
+  }
 
   // Author
   const authorName = post.author.trim();
@@ -117,89 +109,70 @@ if (categoryEl && post.category) {
   document.querySelector(".blog-date").textContent = `PUBLISHED: ${post.date}`;
   document.querySelector(".blog-readtime").innerHTML = `🕒 ${post.readTime || "5 MINUTE READ"}`;
 
-// === CTA ===
-const ctaHeading = document.getElementById("globalCtaHeading");
-const ctaLink = document.getElementById("globalCtaLink");
+  // === CTA ===
+  const ctaHeading = document.getElementById("globalCtaHeading");
+  const ctaLink = document.getElementById("globalCtaLink");
 
-if (ctaHeading && ctaLink) {
-  // Grab defaults from CSS
-  const defaultText = getComputedStyle(document.documentElement)
-    .getPropertyValue('--cta-link-text')
-    .trim() || "Book a Consultation";
+  if (ctaHeading && ctaLink) {
+    const defaultText = getComputedStyle(document.documentElement)
+      .getPropertyValue('--cta-link-text')
+      .trim() || "Book a Consultation";
 
-  const defaultUrl = getComputedStyle(document.documentElement)
-    .getPropertyValue('--cta-link-url')
-    .trim() || "/free-consultation";
+    const defaultUrl = getComputedStyle(document.documentElement)
+      .getPropertyValue('--cta-link-url')
+      .trim() || "/free-consultation";
 
-  // Fill in from sheet OR defaults
-  ctaHeading.textContent = post.ctaText || "Ready to Take the Next Step?";
-  ctaLink.textContent = post.ctaButtonText || defaultText;
-  ctaLink.href = defaultUrl;
-}
-
-
-
-
-
-// === Related Posts ===
-const relatedWrapper = document.getElementById("relatedWrapper");
-const relatedContainer = document.getElementById("relatedPosts");
-
-if (relatedWrapper && relatedContainer) {
-  // Normalize current post tags
-  const currentTags = (post.tags || "").split(",").map(t => t.trim().toLowerCase());
-
-  // Step 1: Find posts with overlapping tags
-  let relatedPosts = postsArray.filter(p => {
-    if (p.link === post.link) return false; // skip current post
-    const tags = (p.tags || "").split(",").map(t => t.trim().toLowerCase());
-    return tags.some(t => currentTags.includes(t));
-  });
-
-  // Step 2: If fewer than 4, add category matches
-  if (relatedPosts.length < 4) {
-    const categoryMatches = postsArray.filter(p =>
-      p.link !== post.link &&
-      p.category === post.category &&
-      !relatedPosts.includes(p)
-    );
-    relatedPosts = relatedPosts.concat(categoryMatches);
+    ctaHeading.textContent = post.ctaText || "Ready to Take the Next Step?";
+    ctaLink.textContent = post.ctaButtonText || defaultText;
+    ctaLink.href = defaultUrl;
   }
 
-  // Step 3: Limit to max 4
-  relatedPosts = relatedPosts.slice(0, 4);
+  // === Related Posts ===
+  const relatedWrapper = document.getElementById("relatedWrapper");
+  const relatedContainer = document.getElementById("relatedPosts");
 
-  // Step 4: Render or remove section
-  if (relatedPosts.length) {
-    relatedPosts.forEach(rp => {
-      const item = document.createElement("a");
-      item.className = "related-item";
-      item.href = rp.link;
-      item.innerHTML = `
-        <img src="${rp.heroImage}" alt="${rp.title}">
-        <div class="related-item-content">
-          <h4>${rp.title}</h4>
-          <span>${rp.category}</span>
-        </div>
-      `;
-      relatedContainer.appendChild(item);
+  if (relatedWrapper && relatedContainer) {
+    const currentTags = (post.tags || "").split(",").map(t => t.trim().toLowerCase());
+
+    let relatedPosts = postsArray.filter(p => {
+      if (p.link === post.link) return false;
+      const tags = (p.tags || "").split(",").map(t => t.trim().toLowerCase());
+      return tags.some(t => currentTags.includes(t));
     });
-  } else {
-    relatedWrapper.remove(); // nukes heading + list if empty
+
+    if (relatedPosts.length < 4) {
+      const categoryMatches = postsArray.filter(p =>
+        p.link !== post.link &&
+        p.category === post.category &&
+        !relatedPosts.includes(p)
+      );
+      relatedPosts = relatedPosts.concat(categoryMatches);
+    }
+
+    relatedPosts = relatedPosts.slice(0, 4);
+
+    if (relatedPosts.length) {
+      relatedPosts.forEach(rp => {
+        const item = document.createElement("a");
+        item.className = "related-item";
+        item.href = rp.link;
+        item.innerHTML = `
+          <img src="${rp.heroImage}" alt="${rp.title}">
+          <div class="related-item-content">
+            <h4>${rp.title}</h4>
+            <span>${rp.category}</span>
+          </div>
+        `;
+        relatedContainer.appendChild(item);
+      });
+    } else {
+      relatedWrapper.remove();
+    }
   }
 }
-
-
-
-
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", loadSingleBlogPost);
 } else {
   loadSingleBlogPost();
 }
-
-
-
-
-
