@@ -1,3 +1,7 @@
+// === CONFIG ===
+const BLOG_INDEX_PATH = "/mtn-hlth-blog";
+
+
 async function loadSingleBlogPost() {
   const postsUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSS00JZEcV_m0xKeyM6VWfWI_r5MEOCivfJMqSW6yj7xxaBmhGRYJVpRRyWHCaH2ONCmSBgMOfFE3U9/pub?gid=0&single=true&output=csv";  
   const authorsUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSS00JZEcV_m0xKeyM6VWfWI_r5MEOCivfJMqSW6yj7xxaBmhGRYJVpRRyWHCaH2ONCmSBgMOfFE3U9/pub?gid=2014004444&single=true&output=csv"; 
@@ -86,7 +90,7 @@ document.querySelector(".blog-title").textContent = post.title;
 document.querySelector(".blog-subtitle").textContent = post.subtitle;
 const categoryEl = document.querySelector(".blog-category");
 if (categoryEl && post.category) {
-  categoryEl.innerHTML = `<a href="/mtn-hlth-blog?category=${encodeURIComponent(
+  categoryEl.innerHTML = `<a href="${BLOG_INDEX_PATH}?category=${encodeURIComponent(
     post.category.trim()
   )}">${post.category}</a>`;
 }
