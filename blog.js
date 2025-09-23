@@ -60,11 +60,23 @@ async function loadSingleBlogPost() {
     };
   });
 
-  const post = postsArray.find(p => currentPath.includes((p.link || "").replace(/\/$/, "")));
-  if (!post) {
-    console.warn("⚠️ No matching post found for:", currentPath);
-    return;
-  }
+// Try to match post by URL
+let post = postsArray.find(p => (p.link || "").replace(/\/$/, "") === currentPath);
+
+// If not found, loosen the match (useful if spreadsheet has shorter paths like "/master-blog")
+if (!post) {
+  post = postsArray.find(p => currentPath.includes((p.link || "").replace(/\/$/, "")));
+}
+
+// Debug logs
+if (!post) {
+  console.warn("⚠️ No matching post found for:", currentPath);
+  console.table(postsArray.map(p => ({ link: p.link, title: p.title })));
+  return;
+} else {
+  console.log("✅ Matched post:", post);
+}
+
 
   // Inject hero image
   const heroImg = document.querySelector(".blog-hero img");
