@@ -60,7 +60,7 @@ async function loadSingleBlogPost() {
     };
   });
 
-  const post = postsArray.find(p => (p.link || "").replace(/\/$/, "") === currentPath);
+  const post = postsArray.find(p => currentPath.includes((p.link || "").replace(/\/$/, "")));
   if (!post) {
     console.warn("⚠️ No matching post found for:", currentPath);
     return;
