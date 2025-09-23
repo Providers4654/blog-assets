@@ -130,96 +130,87 @@
 }
 
 /******************************************************
-  AUTHOR BOX (two-row alignment)
+ AUTHOR BOX — flex-based, consistent desktop + mobile
 ******************************************************/
 .blog-author-box {
-  display: grid;
-  grid-template-columns: auto 1fr auto; /* avatar | text | meta */
-  grid-template-rows: auto auto;        /* 2 rows */
-  column-gap: 0.75rem;
+  display: flex;
   align-items: center;
+  gap: 0.75rem;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
   padding: 0.75rem 0;
   margin-bottom: 1.5rem;
   font-size: 0.85rem;
-  color: #777;
+  color: #555;
+  line-height: 1.4;
 }
 
-/* Avatar spans both rows */
+/* Avatar */
 .blog-author-left img {
-  grid-row: span 2;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
-/* WRITTEN BY */
-.blog-author-left span {
-  grid-column: 2;
-  grid-row: 1;
+/* Text container (two rows) */
+.blog-author-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+/* Row 1: Written by + Published */
+.blog-author-row1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.blog-author-writtenby {
   font-size: 0.7rem;
   color: #999;
   text-transform: uppercase;
-  align-self: end;
+  letter-spacing: 0.03em;
 }
 
-/* Author name */
-.blog-author-left strong {
-  grid-column: 2;
-  grid-row: 2;
-  font-size: 0.95rem;
+.blog-author-date {
+  font-size: 0.75rem;
+  color: #777;
+  white-space: nowrap;
+}
+
+/* Row 2: Name + Read time */
+.blog-author-row2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.blog-author-name {
+  font-size: 0.9rem;
+  font-weight: 600;
   color: #222;
-  align-self: start;
 }
 
-/* Published date (row 1, aligns with WRITTEN BY) */
-.blog-author-right .blog-date {
-  grid-column: 3;
-  grid-row: 1;
+.blog-author-readtime {
   font-size: 0.75rem;
-  color: #999;
-  text-align: right;
-  align-self: end;
+  color: #777;
+  white-space: nowrap;
 }
 
-/* Read time (row 2, aligns with name) */
-.blog-author-right .blog-readtime {
-  grid-column: 3;
-  grid-row: 2;
-  font-size: 0.75rem;
-  color: #999;
-  text-align: right;
-  align-self: start;
-}
-
-
-/* === Mobile tweaks === */
+/* Mobile: same structure, just allow wrapping if tight */
 @media (max-width: 600px) {
-  .blog-author-box {
-    column-gap: 0.5rem;
-    padding: 0.5rem 0;
-    margin-bottom: 1rem;
-    font-size: 0.8rem;
-  }
-
-  .blog-author-left img {
-    width: 36px;
-    height: 36px;
-  }
-
-  .blog-author-left strong {
-    font-size: 0.85rem;
-  }
-
-  .blog-author-right .blog-date,
-  .blog-author-right .blog-readtime {
-    font-size: 0.7rem;
+  .blog-author-row1,
+  .blog-author-row2 {
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 }
-
-
 
 
 
