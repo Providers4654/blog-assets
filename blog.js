@@ -84,7 +84,13 @@ heroImg.onload = () => {
 
 document.querySelector(".blog-title").textContent = post.title;
 document.querySelector(".blog-subtitle").textContent = post.subtitle;
-document.querySelector(".blog-category").textContent = post.category;
+const categoryEl = document.querySelector(".blog-category");
+if (categoryEl && post.category) {
+  categoryEl.innerHTML = `<a href="/master-blog?category=${encodeURIComponent(
+    post.category.trim()
+  )}">${post.category}</a>`;
+}
+
 
 
 
