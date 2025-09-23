@@ -136,47 +136,50 @@ if (categoryEl && post.category) {
 const relatedWrapper = document.getElementById("relatedWrapper");
 const relatedContainer = document.getElementById("relatedPosts");
 
-// Normalize current post tags
-const currentTags = (post.tags || "").split(",").map(t => t.trim().toLowerCase());
+if (relatedWrapper && relatedContainer) {
+  // Normalize current post tags
+  const currentTags = (post.tags || "").split(",").map(t => t.trim().toLowerCase());
 
-// Step 1: Find posts with overlapping tags
-let relatedPosts = postsArray.filter(p => {
-  if (p.link === post.link) return false; // skip current post
-  const tags = (p.tags || "").split(",").map(t => t.trim().toLowerCase());
-  return tags.some(t => currentTags.includes(t));
-});
-
-// Step 2: If fewer than 4, add category matches
-if (relatedPosts.length < 4) {
-  const categoryMatches = postsArray.filter(p =>
-    p.link !== post.link &&
-    p.category === post.category &&
-    !relatedPosts.includes(p) // avoid duplicates
-  );
-  relatedPosts = relatedPosts.concat(categoryMatches);
-}
-
-// Step 3: Limit to max 4
-relatedPosts = relatedPosts.slice(0, 4);
-
-// Step 4: Render or remove section
-if (relatedPosts.length) {
-  relatedPosts.forEach(rp => {
-    const item = document.createElement("a");
-    item.className = "related-item";
-    item.href = rp.link;
-    item.innerHTML = `
-      <img src="${rp.heroImage}" alt="${rp.title}">
-      <div class="related-item-content">
-        <h4>${rp.title}</h4>
-        <span>${rp.category}</span>
-      </div>
-    `;
-    relatedContainer.appendChild(item);
+  // Step 1: Find posts with overlapping tags
+  let relatedPosts = postsArray.filter(p => {
+    if (p.link === post.link) return false; // skip current post
+    const tags = (p.tags || "").split(",").map(t => t.trim().toLowerCase());
+    return tags.some(t => currentTags.includes(t));
   });
-} else if (relatedWrapper) {
-  relatedWrapper.remove(); // nukes heading + list if empty
+
+  // Step 2: If fewer than 4, add category matches
+  if (relatedPosts.length < 4) {
+    const categoryMatches = postsArray.filter(p =>
+      p.link !== post.link &&
+      p.category === post.category &&
+      !relatedPosts.includes(p)
+    );
+    relatedPosts = relatedPosts.concat(categoryMatches);
+  }
+
+  // Step 3: Limit to max 4
+  relatedPosts = relatedPosts.slice(0, 4);
+
+  // Step 4: Render or remove section
+  if (relatedPosts.length) {
+    relatedPosts.forEach(rp => {
+      const item = document.createElement("a");
+      item.className = "related-item";
+      item.href = rp.link;
+      item.innerHTML = `
+        <img src="${rp.heroImage}" alt="${rp.title}">
+        <div class="related-item-content">
+          <h4>${rp.title}</h4>
+          <span>${rp.category}</span>
+        </div>
+      `;
+      relatedContainer.appendChild(item);
+    });
+  } else {
+    relatedWrapper.remove(); // nukes heading + list if empty
+  }
 }
+
 
 
 
