@@ -133,8 +133,28 @@ if (categoryEl && post.category) {
 
 
 // === Related Posts ===
-const relatedWrapper = document.querySelector(".blog-related");
+const relatedWrapper = document.getElementById("relatedWrapper");
 const relatedContainer = document.getElementById("relatedPosts");
+
+// … after filtering posts
+if (relatedPosts.length) {
+  relatedPosts.forEach(rp => {
+    const item = document.createElement("a");
+    item.className = "related-item";
+    item.href = rp.link;
+    item.innerHTML = `
+      <img src="${rp.heroImage}" alt="${rp.title}">
+      <div class="related-item-content">
+        <h4>${rp.title}</h4>
+        <span>${rp.category}</span>
+      </div>
+    `;
+    relatedContainer.appendChild(item);
+  });
+} else if (relatedWrapper) {
+  relatedWrapper.remove();  // nukes heading + list
+}
+
 
 // Normalize current post tags
 const currentTags = (post.tags || "").split(",").map(t => t.trim().toLowerCase());
@@ -179,16 +199,6 @@ if (relatedPosts.length) {
 }
 
 
-
-
-
-  
-// Disclaimer (from CSS)
-const disclaimer = document.getElementById("globalDisclaimer");
-disclaimer.textContent = getComputedStyle(document.documentElement)
-  .getPropertyValue('--disclaimer-text')
-  .trim();
-}
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", loadSingleBlogPost);
