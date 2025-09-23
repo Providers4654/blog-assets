@@ -95,7 +95,8 @@ async function loadSingleBlogPost() {
   const authorData = authorMap[authorName.toLowerCase()];
   const authorImg = document.querySelector(".blog-author-left img");
   const authorLinkEls = document.querySelectorAll(".author-link");
-  const authorNameEl = document.querySelector(".blog-author-left strong");
+  const authorNameEl = document.querySelector(".blog-author-name");
+
 
   if (authorData) {
     authorImg.src = authorData.photoUrl;
