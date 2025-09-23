@@ -401,9 +401,9 @@
   GLOBAL BLOG VARIABLES
 ******************************************************/
 :root {
-  /* Default CTA link */
-  --cta-link-text: "Book a Consultation"; /* used if sheet cell empty */
-  --cta-link-url: "/free-consultation";
+  --cta-link-text: Book a Consultation;
+  --cta-link-url: /free-consultation;
+
 
   /* Disclaimer */
   --disclaimer-heading: "Disclaimer";
