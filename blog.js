@@ -73,26 +73,28 @@ async function loadSingleBlogPost() {
     // === Build Posts Array ===
     const postsArray = posts.slice(1).map((cells, idx) => {
       const [
-        title, // A
-        url, // B
-        heroImage, // C
-        subtitle, // D
-        author, // E
-        date, // F
-        category, // G
-        readTime, // H
-        tags, // I
-        section1, // J
-        subsection1, // K
-        section2, // L
-        subsection2, // M
-        section3, // N
-        subsection3, // O
-        section4, // P
-        subsection4, // Q
-        excerpt, // R
-        ctaText, // S
-        ctaButtonText // T
+        title,        // A
+        url,          // B
+        heroImage,    // C
+        subtitle,     // D
+        author,       // E
+        date,         // F
+        category,     // G
+        readTime,     // H
+        tags,         // I
+        highlights,   // J ← NEW: Article Highlights
+        section1,     // K
+        subsection1,  // L
+        section2,     // M
+        subsection2,  // N
+        section3,     // O
+        subsection3,  // P
+        section4,     // Q
+        subsection4,  // R
+        excerpt,      // S
+        ctaText,      // T
+        ctaButtonText,// U
+        ctaButtonLink // V ← NEW: CTA Button Link
       ] = cells;
 
       return {
@@ -105,19 +107,17 @@ async function loadSingleBlogPost() {
         category,
         readTime,
         tags,
+        highlights,
         excerpt,
         ctaText,
         ctaButtonText,
+        ctaButtonLink,
         contentBlocks: [
-          section1,
-          subsection1,
-          section2,
-          subsection2,
-          section3,
-          subsection3,
-          section4,
-          subsection4,
-        ].filter((v) => v && v.trim() !== ""), // ✅ filters out empty/undefined
+          section1, subsection1,
+          section2, subsection2,
+          section3, subsection3,
+          section4, subsection4,
+        ].filter(v => v && v.trim() !== ""),
         row: idx + 2,
       };
     });
@@ -136,9 +136,7 @@ async function loadSingleBlogPost() {
     }
     if (!post) {
       console.error("❌ No post matched this path:", currentPath);
-      console.table(
-        postsArray.map((p) => ({ row: p.row, url: p.url, title: p.title }))
-      );
+      console.table(postsArray.map((p) => ({ row: p.row, url: p.url, title: p.title })));
       return;
     }
 
@@ -160,16 +158,13 @@ async function loadSingleBlogPost() {
       const el = document.querySelector(selector);
       if (el && value) el.textContent = value;
     };
-
     setText(".blog-title", post.title);
     setText(".blog-subtitle", post.subtitle);
 
     // === CATEGORY LINK ===
     const catEl = document.querySelector(".blog-category");
     if (catEl && post.category) {
-      catEl.innerHTML = `<a href="${BLOG_INDEX_PATH}?category=${encodeURIComponent(
-        post.category
-      )}">${post.category}</a>`;
+      catEl.innerHTML = `<a href="${BLOG_INDEX_PATH}?category=${encodeURIComponent(post.category)}">${post.category}</a>`;
     }
 
     // === AUTHOR BOX ===
@@ -178,7 +173,6 @@ async function loadSingleBlogPost() {
     const authorImg = document.querySelector(".blog-author-left img");
     const authorLinks = document.querySelectorAll(".author-link");
     const authorNameEl = document.querySelector(".blog-author-name");
-
     if (authorData) {
       if (authorImg) authorImg.src = authorData.photoUrl;
       authorLinks.forEach((a) => (a.href = authorData.profileUrl));
@@ -189,8 +183,19 @@ async function loadSingleBlogPost() {
     const dateEl = document.querySelector(".blog-author-date");
     const readEl = document.querySelector(".blog-author-readtime");
     if (dateEl && post.date) dateEl.textContent = `Published: ${post.date}`;
-    if (readEl)
-      readEl.innerHTML = `🕒 ${post.readTime || "5 min read"}`;
+    if (readEl) readEl.innerHTML = `🕒 ${post.readTime || "5 min read"}`;
+
+    // === ARTICLE HIGHLIGHTS ===
+    const highlightsEl = document.getElementById("highlightsList");
+    if (highlightsEl && post.highlights) {
+      highlightsEl.innerHTML = "";
+      const items = post.highlights.split(/[\n•,]+/).map(t => t.trim()).filter(Boolean);
+      items.forEach(text => {
+        const li = document.createElement("li");
+        li.textContent = text;
+        highlightsEl.appendChild(li);
+      });
+    }
 
     // === CONTENT SECTIONS ===
     const contentEl = document.querySelector("#blogContent");
@@ -215,23 +220,20 @@ async function loadSingleBlogPost() {
     const ctaLink = document.getElementById("globalCtaLink");
     if (ctaHeading && ctaLink) {
       ctaHeading.textContent =
-        (post.ctaText && post.ctaText.trim()) ||
-        "Ready to Take the Next Step?";
+        (post.ctaText && post.ctaText.trim()) || "Ready to Take the Next Step?";
       ctaLink.textContent =
-        (post.ctaButtonText && post.ctaButtonText.trim()) ||
-        "Book a Consultation";
-      ctaLink.href = "/free-consultation";
+        (post.ctaButtonText && post.ctaButtonText.trim()) || "Book a Consultation";
+      ctaLink.href =
+        (post.ctaButtonLink && post.ctaButtonLink.trim()) || "/free-consultation";
     }
 
     // === RELATED POSTS ===
     const relatedWrapper = document.getElementById("relatedWrapper");
     const relatedContainer = document.getElementById("relatedPosts");
-
     if (relatedWrapper && relatedContainer) {
       const currentTags = (post.tags || "")
         .split(",")
         .map((t) => t.trim().toLowerCase());
-
       let relatedPosts = postsArray.filter((p) => {
         if (p.url === post.url) return false;
         const tags = (p.tags || "")
@@ -239,17 +241,12 @@ async function loadSingleBlogPost() {
           .map((t) => t.trim().toLowerCase());
         return tags.some((t) => currentTags.includes(t));
       });
-
       if (relatedPosts.length < 4) {
         const sameCategory = postsArray.filter(
-          (p) =>
-            p.url !== post.url &&
-            p.category === post.category &&
-            !relatedPosts.includes(p)
+          (p) => p.url !== post.url && p.category === post.category && !relatedPosts.includes(p)
         );
         relatedPosts = relatedPosts.concat(sameCategory);
       }
-
       relatedPosts = relatedPosts.slice(0, 4);
       if (relatedPosts.length > 0) {
         relatedPosts.forEach((rp) => {
