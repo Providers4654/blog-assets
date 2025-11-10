@@ -215,17 +215,35 @@ async function loadSingleBlogPost() {
       console.warn("⚠️ No content blocks found for this post.");
     }
 
-    // === CTA ===
-    const ctaHeading = document.getElementById("globalCtaHeading");
-    const ctaLink = document.getElementById("globalCtaLink");
-    if (ctaHeading && ctaLink) {
-      ctaHeading.textContent =
-        (post.ctaText && post.ctaText.trim()) || "Ready to Take the Next Step?";
-      ctaLink.textContent =
-        (post.ctaButtonText && post.ctaButtonText.trim()) || "Book a Consultation";
-      ctaLink.href =
-        (post.ctaButtonLink && post.ctaButtonLink.trim()) || "/free-consultation";
-    }
+// === CTA ===
+const ctaHeading = document.getElementById("globalCtaHeading");
+const ctaLink = document.getElementById("globalCtaLink");
+
+if (ctaHeading && ctaLink) {
+  // Set CTA heading and button text
+  ctaHeading.textContent =
+    (post.ctaText && post.ctaText.trim()) ||
+    "Ready to Take the Next Step?";
+  ctaLink.textContent =
+    (post.ctaButtonText && post.ctaButtonText.trim()) ||
+    "Book a Consultation";
+
+  // Determine CTA URL
+  let link = (post.ctaButtonLink || "").trim();
+
+  // If empty, use default
+  if (!link) {
+    link = "/free-consultation";
+  }
+
+  // Automatically prefix with https:// if missing (and not a relative link)
+  if (!link.startsWith("http") && !link.startsWith("/")) {
+    link = "https://" + link;
+  }
+
+  ctaLink.href = link;
+}
+
 
     // === RELATED POSTS ===
     const relatedWrapper = document.getElementById("relatedWrapper");
