@@ -205,7 +205,7 @@ async function loadSingleBlogPost() {
           if (!html || html.trim() === "") return;
           const section = document.createElement("section");
           section.className = `content-block block-${i + 1}`;
-          section.innerHTML = html;
+          section.innerHTML = html.replace(/\n{2,}/g, '</p><p>').replace(/\n/g, '<br>');
           contentEl.appendChild(section);
         } catch (e) {
           console.warn(`⚠️ Skipped invalid content block ${i + 1}`, e);
