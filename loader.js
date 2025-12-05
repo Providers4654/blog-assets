@@ -4,11 +4,27 @@
 
 
 
+/* ===== SQUARESPACE EDIT MODE PROTECTION ===== */
+try {
+  // Detect if code block is running inside Squarespace editor iframe
+  const isInSquarespaceIframe =
+    window.frameElement &&
+    window.frameElement.classList &&
+    window.frameElement.classList.contains("sqs-code-block");
 
-// === STOP LOADER IN SQUARESPACE EDIT MODE ===
-if (document.body && document.body.classList.contains("sqs-edit-mode")) {
-  console.log("⛔ MTN HLTH Blog Loader disabled in Squarespace Edit Mode");
-  return; // Prevent the full overwrite so editor remains editable
+  // Detect Squarespace page editor mode
+  const isSqEdit =
+    window.top &&
+    window.top.document &&
+    window.top.document.body &&
+    window.top.document.body.classList.contains("sqs-edit-mode");
+
+  if (isInSquarespaceIframe || isSqEdit) {
+    console.log("⛔ Blog Loader Disabled in Squarespace Editor");
+    return;
+  }
+} catch (e) {
+  console.warn("Squarespace detection error:", e);
 }
 
 
