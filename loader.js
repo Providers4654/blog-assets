@@ -1,6 +1,27 @@
 // === MTN HLTH Blog Loader ===
 // Dynamically loads blog.html, then blog.css + blog.js with cache-busting
 
+
+
+
+
+// === STOP LOADER IN SQUARESPACE EDIT MODE ===
+if (document.body && document.body.classList.contains("sqs-edit-mode")) {
+  console.log("⛔ MTN HLTH Blog Loader disabled in Squarespace Edit Mode");
+  return; // Prevent the full overwrite so editor remains editable
+}
+
+
+
+
+
+
+
+
+
+
+
+
 // === Cache-Busting Setup ===
 const manualBump = "1"; // Change this if you want to force-refresh all assets
 const today = new Date();
